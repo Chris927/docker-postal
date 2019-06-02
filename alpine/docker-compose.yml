@@ -5,7 +5,7 @@ services:
     container_name: postal
     command: run
     ports:
-      - 127.0.0.1:25:25
+      - 0.0.0.0:25:25
     depends_on:
       - "mysql"
       - "rabbitmq"
@@ -14,25 +14,29 @@ services:
       - ./data/postal/assets:/opt/postal/public/assets
       - ./src/templates/:/templates
     environment:
-      - MYSQL_ROOT_PASSWORD=changeme
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-changeme}
       - MYSQL_DATABASE=postal
       - RABBITMQ_DEFAULT_USER=postal
-      - RABBITMQ_DEFAULT_PASS=changeme
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS:-changeme}
       - RABBITMQ_DEFAULT_VHOST=postal
+      - BASE_DOMAIN=${BASE_DOMAIN:-example.com}
+      - SMTP_USERNAME=${SMTP_USERNAME:-changeme}
+      - SMTP_PASSWORD=${SMTP_PASSWORD:-changeme}
+      - SMTP_FROM_ADDRESS=${SMTP_FROM_ADDRESS:-postal@example.com}
   mysql:
     image: mariadb:10
     container_name: postal_mysql
     volumes:
       - ./data/mysql:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=changeme
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-changeme}
       - MYSQL_DATABASE=postal
   rabbitmq:
     image: rabbitmq:3-alpine
     container_name: postal_rabbitmq
     environment:
       - RABBITMQ_DEFAULT_USER=postal
-      - RABBITMQ_DEFAULT_PASS=changeme
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS:-changeme}
       - RABBITMQ_DEFAULT_VHOST=/postal
   nginx:
     image: nginx

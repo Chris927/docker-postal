@@ -5,7 +5,7 @@ web_server:
 
 web:
   # The host that the management interface will be available on
-  host: postal.example.com
+  host: {{ BASE_DOMAIN }}
   # The protocol that requests to the management interface should happen on
   protocol: https
 
@@ -46,21 +46,21 @@ dns:
   # https://github.com/atech/postal/wiki/Domains-&-DNS-Configuration for further
   # information about these.
   mx_records:
-    - mx.postal.example.com
-  smtp_server_hostname: postal.example.com
-  spf_include: spf.postal.example.com
-  return_path: rp.postal.example.com
-  route_domain: routes.postal.example.com
-  track_domain: track.postal.example.com
+    - mx.{{ BASE_DOMAIN }}
+  smtp_server_hostname: {{ BASE_DOMAIN }}
+  spf_include: spf.{{ BASE_DOMAIN }}
+  return_path: rp.{{ BASE_DOMAIN }}
+  route_domain: routes.{{ BASE_DOMAIN }}
+  track_domain: track.{{ BASE_DOMAIN }}
 
 smtp:
   # Specify an SMTP server that can be used to send messages from the Postal management
   # system to users. You can configure this to use a Postal mail server once the
   # your installation has been set up.
   host: 127.0.0.1
-  port: 2525
-  username: # Complete when Postal is running and you can
-  password: # generate the credentials within the interface.
+  port: 25
+  username: {{ SMTP_USERNAME }} # Complete when Postal is running and you can
+  password: {{ SMTP_PASSWORD }} # generate the credentials within the interface.
   from_name: Postal
-  from_address: postal@yourdomain.com
+  from_address: {{ SMTP_FROM_ADDRESS }}
 

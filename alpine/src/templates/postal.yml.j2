@@ -1,6 +1,7 @@
+# WARNING: This file seems ineffective, entrypoint uses example as input
 web:
   # The host that the management interface will be available on
-  host: postal.example.com
+  host: postal.{{ BASE_DOMAIN }}
   # The protocol that requests to the management interface should happen on
   protocol: https
 
@@ -41,23 +42,23 @@ dns:
   # https://github.com/atech/postal/wiki/Domains-&-DNS-Configuration for further
   # information about these.
   mx_records:
-    - mx.postal.example.com
-  smtp_server_hostname: postal.example.com
-  spf_include: spf.postal.example.com
-  return_path: rp.postal.example.com
-  route_domain: routes.postal.example.com
-  track_domain: track.postal.example.com
+    - mx.postal.{{ BASE_DOMAIN }}
+  smtp_server_hostname: postal.{{ BASE_DOMAIN }}
+  spf_include: spf.postal.{{ BASE_DOMAIN }}
+  return_path: rp.postal.{{ BASE_DOMAIN }}
+  route_domain: routes.postal.{{ BASE_DOMAIN }}
+  track_domain: track.postal.{{ BASE_DOMAIN }}
 
 smtp:
   # Specify an SMTP server that can be used to send messages from the Postal management
   # system to users. You can configure this to use a Postal mail server once the
   # your installation has been set up.
   host: 127.0.0.1
-  port: 2525
+  port: 25
   username: # Complete when Postal is running and you can
   password: # generate the credentials within the interface.
   from_name: Postal
-  from_address: postal@yourdomain.com
+  from_address: postal@{{ BASE_DOMAIN }}
 
 rails:
   # This is generated automatically by the config initialization. It should be a random
